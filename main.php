@@ -87,7 +87,7 @@ function mkhead($title){
 // Generate footer
 function mkfooter(){
 	echo mkXMLtag('footer',[
-		['hr']
+		['hr'],
 		(getconfig()['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a><br/>.':''),
 		'This page is generated using '.mkXMLtag('a', getconfig()['source']['name'], ['href' => getconfig()['source']['repo']]).'.',
 	]);
