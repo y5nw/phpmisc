@@ -18,7 +18,9 @@ function mkXMLopen($tag, $attrs = []){
 // Basic function to generate XML
 function mkXMLdata($data){
 	if(gettype($data) == 'array'){
-		if(empty($data[2])){ $data[2]=[]; };
+		if(empty($data[0])) return '';
+		if(empty($data[1])) $data[1]='';
+		if(empty($data[2])) $data[2]=[];
 		if(gettype($data[1]) == 'array'){
 			$ret = mkXMLopen($data[0], $data[2]);
 			foreach($data[1] as $element){
@@ -88,7 +90,7 @@ function mkhead($title){
 function mkfooter(){
 	echo mkXMLtag('footer',[
 		['hr'],
-		(getconfig()['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a><br/>.':''),
+		(getconfig()['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
 		'This page is generated using '.mkXMLtag('a', getconfig()['source']['name'], ['href' => getconfig()['source']['repo']]).'.',
 	]);
 }
