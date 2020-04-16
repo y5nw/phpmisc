@@ -79,7 +79,7 @@ function mailto($name,$email){
 function mkhead($title){
 	echo mkXMLtag('head', [
 		['title',"{$title} - {getconfig()['content']['title']}"],
-		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" {__DIR__}/style.css')],
+		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" '.__DIR__.'/style.css')],
 	]);
 }
 
@@ -88,7 +88,7 @@ function mkhead($title){
 function mkfooter(){
 	echo mkXMLtag('footer',[
 		(getconfig()['content']['octicons']?['p', 'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.']:''),
-		['p', 'This page is generated using'.mkXMLtag('a', getconfig()['source']['name'], [href => getconfig()['source']['repo']])],
+		['p', 'This page is generated using'.mkXMLtag('a', getconfig()['source']['name'], ['href' => getconfig()['source']['repo']])],
 	]);
 }
 
