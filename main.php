@@ -78,7 +78,7 @@ function mailto($name,$email){
 // Make the <head>...</head> data
 function mkhead($title){
 	echo mkXMLtag('head', [
-		['title',{$title}.' - '.getconfig()['content']['title']],
+		['title',$title.' - '.getconfig()['content']['title']],
 		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" '.__DIR__.'/style.css')],
 	]);
 }
