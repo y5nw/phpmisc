@@ -1,0 +1,11 @@
+table, td{
+	border: solid 1px black;
+	border-spacing: 0px;
+}
+
+svg.normalicon{
+	height: 1em;
+	width: auto;
+	top: 0.125em;
+	position: relative;
+}
