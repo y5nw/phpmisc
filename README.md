@@ -1,2 +1,2 @@
 # phpmisc
-Some PHP code I use for a web server
+This repository includes some PHP code that I write for a webserver.
