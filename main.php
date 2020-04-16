@@ -1,5 +1,7 @@
 <?php
 
+include 'config.php';
+
 // Make a opening XML tag
 function mkXMLopen($tag, $attrs = []){
 	$ret = "<{$tag}";
@@ -76,18 +78,22 @@ function mailto($name,$email){
 // Make the <head>...</head> data
 function mkhead($title){
 	echo mkXMLtag('head', [
-		['title',$title],
-		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" /var/www/html/res/style.css')],
+		['title',"{$title} - {getconfig()['content']['title']}"],
+		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" {__DIR__}/style.css')],
 	]);
 }
 
+
+// Generate footer
 function mkfooter(){
-	echo mkXMLtag('div',[
-		['p', 'This page uses icons from <a href="https://octicons.github.com/">Octicons</a>.']
+	echo mkXMLtag('footer',[
+		(getconfig()['content']['octicons']?['p', 'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.']:''),
+		['p', 'This page is generated using'.mkXMLtag('a', getconfig()['source']['name'], [href => getconfig()['source']['repo']])],
 	]);
 }
 
 function octicons($name, $cls='normalicon'){
+	if (!getconfig()['content']['octicons']) return '';
 	$octicons_data = [];
 	$fh = fopen(__DIR__.'/octicons.json','r') or die('Internal error');
 	if (isset($fh)) $octicons_data=json_decode(fread($fh, filesize(__DIR__.'/octicons.json')), true);
