@@ -85,6 +85,10 @@ function mkhead($title){
 	]);
 }
 
+// Generate header (not useful at the moment)
+function mkheader(){
+	echo mkXMLtag('header'); // Placeholder
+}
 
 // Generate footer
 function mkfooter(){
@@ -95,7 +99,18 @@ function mkfooter(){
 	]);
 }
 
-function octicons($name, $cls='normalicon'){
+// Generate the whole page
+function mkHTMLpage($title, $main){
+	echo '<!DOCTYPE html><html>';
+	mkhead($title);
+	echo '<body>';
+	mkheader();
+	echo mkXMLtag('main',$main);
+	mkfooter();
+	echo '</body></html>';
+}
+
+function octicons($name, $cls='octicons'){
 	if (!PHPMISC_CONFIG['content']['octicons']) return '';
 	$octicons_data = [];
 	$fh = fopen(__DIR__.'/octicons.json','r') or die('Internal error');

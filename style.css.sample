@@ -3,7 +3,7 @@ table, td{
 	border-spacing: 0px;
 }
 
-svg.normalicon{
+svg.octicons{
 	height: 1em;
 	width: auto;
 	top: 0.125em;
