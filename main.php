@@ -85,15 +85,17 @@ function mkhead($title){
 	]);
 }
 
-// Generate header (not useful at the moment)
+// Generate header
 function mkheader(){
-	echo mkXMLtag('header'); // Placeholder
+	echo mkXMLtag('header',[
+		'Navigation: ',
+		['a', 'Home', ['href' => '/']],
+	]);
 }
 
 // Generate footer
 function mkfooter(){
 	echo mkXMLtag('footer',[
-		'<hr/>',
 		(PHPMISC_CONFIG['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
 		'This page is generated using '.mkXMLtag('a', PHPMISC_CONFIG['source']['name'], ['href' => PHPMISC_CONFIG['source']['repo']]).'.',
 	]);
