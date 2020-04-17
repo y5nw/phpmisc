@@ -22,6 +22,6 @@ body > *{
 	min-width: 60%;
 	max-width: 100%;
 	padding: 10px;
-	background-color: white
+	background-color: white;
 	border: solid 1px black;
 }
