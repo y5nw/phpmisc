@@ -80,7 +80,7 @@ function mailto($name,$email){
 // Make the <head>...</head> data
 function mkhead($title){
 	echo mkXMLtag('head', [
-		['title',$title.' - '.getconfig()['content']['title']],
+		['title',$title.' - '.PHPMISC_CONFIG['content']['title']],
 		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" '.__DIR__.'/style.css')],
 	]);
 }
@@ -90,13 +90,13 @@ function mkhead($title){
 function mkfooter(){
 	echo mkXMLtag('footer',[
 		['hr'],
-		(getconfig()['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
-		'This page is generated using '.mkXMLtag('a', getconfig()['source']['name'], ['href' => getconfig()['source']['repo']]).'.',
+		(PHPMISC_CONFIG['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
+		'This page is generated using '.mkXMLtag('a', PHPMISC_CONFIG['source']['name'], ['href' => PHPMISC_CONFIG['source']['repo']]).'.',
 	]);
 }
 
 function octicons($name, $cls='normalicon'){
-	if (!getconfig()['content']['octicons']) return '';
+	if (!PHPMISC_CONFIG['content']['octicons']) return '';
 	$octicons_data = [];
 	$fh = fopen(__DIR__.'/octicons.json','r') or die('Internal error');
 	if (isset($fh)) $octicons_data=json_decode(fread($fh, filesize(__DIR__.'/octicons.json')), true);
