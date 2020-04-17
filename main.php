@@ -103,7 +103,7 @@ function octicons($name, $cls='normalicon'){
 	if (isset($fh)) fclose($fh);
 	if (array_key_exists($name, $octicons_data)){
 		$dat = $octicons_data[$name];
-		return "<svg class='{$cls}' xmlns='http://www.w3.org/2000/svg' width='{$dat['width']}' height='{$dat['height']}' viewBox='0 0 {$dat['width']} {$dat['height']}' preserveAspectRatio='none'>{$dat['path']}</svg>";
+		return "<svg class='{$cls}' xmlns='http://www.w3.org/2000/svg' width='{$dat['width']}' height='{$dat['height']}' viewBox='0 0 {$dat['width']} {$dat['height']}' preserveAspectRatio='none'>{$dat['path']}</svg> ";
 	}else{
 		return '';
 	};
