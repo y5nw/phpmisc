@@ -24,7 +24,7 @@ function parseMD($string){
 		$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
 		$trdata = [];
 		foreach ($octicons_data as $k => $v){
-			$trdata[$k] = octicons($k);
+			$trdata['::o::'.$k.'::'] = octicons($k);
 		}
 		$ret = strtr($ret, $trdata);
 	}
