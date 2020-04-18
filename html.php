@@ -1,8 +1,8 @@
 <?php
 
-include 'config.php';
-include 'xml.php';
-include 'utils.php';
+include_once 'config.php';
+include_once 'xml.php';
+include_once 'utils.php';
 
 if (defined('PHPMISC_HTML')) return;
 define('PHPMISC_HTML', true);

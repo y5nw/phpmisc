@@ -1,6 +1,6 @@
 <?php
 
-include 'config.php';
+include_once 'config.php';
 
 if (defined('PHPMISC_UTILS')) return;
 define('PHPMISC_UTILS', true);

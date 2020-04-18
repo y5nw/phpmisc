@@ -1,6 +1,6 @@
 <?php
 
-include 'config.php';
+include_once 'config.php';
 
 if (defined('PHPMISC_XML')) return;
 define('PHPMISC_XML', true);
