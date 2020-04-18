@@ -23,7 +23,7 @@ function parseMD($string){
 		$octicons_data = [];
 		$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
 		foreach ($octicons_data as $k => $v){
-			ret = preg_replace('/::o::'.$k.'::/', octicons($k), $ret);
+			$ret = preg_replace('/::o::'.$k.'::/', octicons($k), $ret);
 		}
 	}
 	return $ret;
