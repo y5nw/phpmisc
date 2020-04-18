@@ -5,7 +5,7 @@
 function parseMD($string){
 	$ret = $string;
 	/* <code> */
-	$ret = preg_replace('/`([^`]*)`/ms', mkXMLtag('code','${1}'), $ret);
+	$ret = preg_replace('/`([^`]*)`/ms', '<code>${1}</code>', $ret);
 }
 
 ?>
