@@ -14,6 +14,20 @@ define('PHPMISC_CONFIG',[
 		'title' => 'Foobar',
 		// Use Octicons
 		'octicons' => false,
+		// Options related to the markdown parser
+		'markdown' => [
+			// Set the following to false to disable the parser entirely.
+			'enabled' => true,
+			// Enable inline code block?
+			'code' => true,
+			// Enable headings? (At the moment, this feature might break some pages showing code with '#' as comment)
+			'headings' => true,
+			// Enable images and links? (Both work similarly, so the this option controls both)
+			'images' => true,
+			// Enable octicons (non-standard)?
+			// NOTE: you should also enable PHPMISC['content']['octicons'] in order to use this.
+			'octicons' => false,
+		]
 	],
 ]);
 
