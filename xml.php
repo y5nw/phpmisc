@@ -1,6 +1,7 @@
 <?php
 
 include_once 'config.php';
+include_once 'markdown.php';
 
 if (defined('PHPMISC_XML')) return;
 define('PHPMISC_XML', true);
@@ -19,7 +20,7 @@ function mkXMLopen($tag, $attrs = []){
 }
 
 // Basic function to generate XML
-function mkXMLdata($data){
+function mkXMLdata($data, $parsemd = false){
 	if(gettype($data) == 'array'){
 		if(empty($data[0])) return '';
 		if(empty($data[1])) $data[1]='';
@@ -27,28 +28,30 @@ function mkXMLdata($data){
 		if(gettype($data[1]) == 'array'){
 			$ret = mkXMLopen($data[0], $data[2]);
 			foreach($data[1] as $element){
-				$ret .= mkXMLdata($element);
+				$ret .= mkXMLdata($element, $parsemd);
 			}
 			$ret .= "</{$data[0]}>";
 			return $ret;
 		}else{
+			if ($parsemd) $data[1] = parseMD($data[1]);
 			return mkXMLopen($data[0], $data[2]) . "{$data[1]}</{$data[0]}>";
 		}
 	}else{
+		if ($parsemd) return parseMD($data);
 		return $data;
 	}
 }
 
 // Simplify mkXMLdata to reduce headache
-function mkXMLtag($tagname, $innerXML = '', $attributes = []){
-	return mkXMLdata([$tagname, $innerXML, $attributes]);
+function mkXMLtag($tagname, $innerXML = '', $attributes = [], $parsemd = false){
+	return mkXMLdata([$tagname, $innerXML, $attributes], $parsemd);
 }
 
 // Create an XML array
-function mkXMLarray($tags, $data, $attributes = []){
+function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
 	if(count($tags)==0){
-		if(gettype($data)=='array'){ return $data[0]; }
-		return $data;
+		if(gettype($data)=='array') return mkXMLdata($data[0], $parsemd);
+		return mkXMLdata($data, $parsemd);
 	}else{
 		$tag = $tags[0];
 		unset($tags[0]);
@@ -69,7 +72,7 @@ function mkXMLarray($tags, $data, $attributes = []){
 					}
 				}
 			}
-			$ret .= mkXMLopen($tag, array_merge($attr, $xattr)) . mkXMLarray($tags, $i, $attributes) . "</{$tag}>";
+			$ret .= mkXMLopen($tag, array_merge($attr, $xattr)) . mkXMLarray($tags, $i, $attributes, $parsemd) . "</{$tag}>";
 		}
 		return $ret;
 	}

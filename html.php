@@ -37,12 +37,12 @@ function mkfooter(){
 }
 
 // Generate the whole page
-function mkHTMLpage($title, $main){
+function mkHTMLpage($title, $main, $parsemd = false){
 	echo '<!DOCTYPE html><html>';
 	mkhead($title);
 	echo '<body>';
 	mkheader();
-	echo mkXMLtag('main',$main);
+	echo mkXMLtag('main',$main, array(), $parsemd);
 	mkfooter();
 	echo '</body></html>';
 }
@@ -53,7 +53,15 @@ function octicons($name, $cls='octicons'){
 	$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
 	if (array_key_exists($name, $octicons_data)){
 		$dat = $octicons_data[$name];
-		return "<svg class='{$cls}' xmlns='http://www.w3.org/2000/svg' width='{$dat['width']}' height='{$dat['height']}' viewBox='0 0 {$dat['width']} {$dat['height']}' preserveAspectRatio='none'>{$dat['path']}</svg> ";
+		return mkXMLtag('svg', $dat['path'],[
+			'xmlns' => 'http://www.w3.org/2000/svg',
+			'class' => $cls,
+			'width' => $dat['width'],
+			'height' => $dat['height'],
+			'viewBox' => "0 0 {$dat['width']} {$dat['height']}",
+			'preserveAspectRatio' => 'none',
+
+		]);
 	}else{
 		return '';
 	};

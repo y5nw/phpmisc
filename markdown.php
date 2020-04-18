@@ -1,7 +1,6 @@
 <?php
 
-#include 'xml.php';
-
+// Since this function is called by mkXML*, it is a bad idea to use them.
 function parseMD($string){
 	$ret = $string;
 	/* <code> */
