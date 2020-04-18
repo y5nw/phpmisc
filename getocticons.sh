@@ -7,5 +7,5 @@ if [ $AGREE_LICENSE == false ]; then
 	echo "To make sure that you read this message, edit this script and change \"false\" to \"true\"";
 else
 	OCTICONS_DATA=$(echo "<?php var_export(json_decode('$(wget -O- https://unpkg.com/octicons/build/data.json)')); ?>" | php)
-	echo "<?php define('PHPMISC_OCTICONS_DATA', ${OCTICONS_DATA}); ?>" > octicons.php
+	echo "<?php \$PHPMISC_OCTICONS_DATA=${OCTICONS_DATA}; ?>" > octicons.php
 fi
