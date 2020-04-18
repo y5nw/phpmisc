@@ -22,9 +22,11 @@ function parseMD($string){
 	if ($mdconfig['octicons']){
 		$octicons_data = [];
 		$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
+		$trdata = [];
 		foreach ($octicons_data as $k => $v){
-			$ret = preg_replace('/::o::'.$k.'::/', octicons($k), $ret);
+			$trdata[$k] = octicons($k);
 		}
+		$ret = strtr($ret, $trdata);
 	}
 	return $ret;
 }
