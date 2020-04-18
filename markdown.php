@@ -7,7 +7,7 @@ function parseMD($string){
 	$ret = preg_replace('/`([^`]+)`/ms', '<code>${1}</code>', $ret);
 	/* <h1> .. <h6> */
 	for ($i = 1; $i < 7; $i++){
-		$ret = preg_replace('/^'.str_repeat('#', $i).' +(.*)$', '<h'.$i.'>${1}</h'.$i.'>', $ret);
+		$ret = preg_replace('/^'.str_repeat('#', $i).' +(.*)$/', '<h'.$i.'>${1}</h'.$i.'>', $ret);
 	}
 	return $ret;
 }
