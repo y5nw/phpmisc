@@ -2,6 +2,9 @@
 
 include 'config.php';
 
+if (defined('PHPMISC_UTILS')) return;
+define('PHPMISC_UTILS', true);
+
 function catfile($fn){
 	try{
 		$fh = fopen($fn);

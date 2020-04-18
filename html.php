@@ -4,6 +4,9 @@ include 'config.php';
 include 'xml.php';
 include 'utils.php';
 
+if (defined('PHPMISC_HTML')) return;
+define('PHPMISC_HTML', true);
+
 // Make a mailto: link
 function mailto($name,$email){
 	return(mkXMLtag('a', $name . ' &lt;' . mkXMLtag('code',$email) . '&gt;', ['href' => "mailto:{$email}"]));

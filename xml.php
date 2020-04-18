@@ -2,6 +2,9 @@
 
 include 'config.php';
 
+if (defined('PHPMISC_XML')) return;
+define('PHPMISC_XML', true);
+
 // Make an opening XML tag
 function mkXMLopen($tag, $attrs = []){
 	$ret = "<{$tag}";

@@ -1,5 +1,7 @@
 <?php
 
+if (defined('PHPMISC_CONFIG')) return;
+
 define('PHPMISC_CONFIG',[
 	'source' => [
 		// Source repository
