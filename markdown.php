@@ -22,7 +22,8 @@ function parseMD($string){
 	/* Extra: octicons */
 	if ($mdconfig['octicons']){
 		$trdata = [];
-		foreach (PHPMISC_OCTICONS_DATA as $k => $v){
+		global $PHPMISC_OCTICONS_DATA;
+		foreach ($PHPMISC_OCTICONS_DATA as $k => $v){
 			$trdata['::o::'.$k.'::'] = octicons($k);
 		}
 		$ret = strtr($ret, $trdata);
