@@ -6,5 +6,6 @@ define('PHPMISC_MAIN', true);
 include_once 'config.php';
 include_once 'xml.php';
 include_once 'html.php';
+include_once 'markdown.php';
 
 ?>
