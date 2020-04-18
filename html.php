@@ -61,7 +61,7 @@ function octicons($name, $cls='octicons'){
 			'viewBox' => "0 0 {$dat['width']} {$dat['height']}",
 			'preserveAspectRatio' => 'none',
 
-		]);
+		]).' ';
 	}else{
 		return '';
 	};
