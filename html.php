@@ -4,7 +4,7 @@ include_once 'config.php';
 include_once 'xml.php';
 include_once 'utils.php';
 include_once 'octicons.php';
-if (!defined('PHPMISC_OCTICONS_DATA') define('PHPMISC_OCTICONS_DATA', []);
+if (!defined('PHPMISC_OCTICONS_DATA')) define('PHPMISC_OCTICONS_DATA', []);
 
 if (defined('PHPMISC_HTML')) return;
 define('PHPMISC_HTML', true);
