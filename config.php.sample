@@ -25,7 +25,7 @@ define('PHPMISC_CONFIG',[
 			// Enable images and links? (Both work similarly, so the this option controls both)
 			'images' => true,
 			// Enable octicons (non-standard)?
-			// NOTE: you should also enable PHPMISC['content']['octicons'] in order to use this.
+			// NOTE: you should also enable PHPMISC_CONFIG['content']['octicons'] in order to use this.
 			'octicons' => false,
 		]
 	],

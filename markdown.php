@@ -19,7 +19,13 @@ function parseMD($string){
 		$ret = preg_replace('/\[([^\]]*)\]\(([^\)]*)\)/', '<a href="${2}">$1</a>', $ret);
 	}
 	/* Extra: octicons */
-	if ($mdconfig['octicons']) $ret = preg_replace('/::o::([^:]+)::/', octicons('${1}'), $ret);
+	if ($mdconfig['octicons']){
+		$octicons_data = [];
+		$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
+		foreach ($octicons_data as $k => $v){
+			ret = preg_replace('/::o::'.$k.'::/', octicons($k), $ret);
+		}
+	}
 	return $ret;
 }
 
