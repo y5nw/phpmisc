@@ -7,7 +7,7 @@ define('PHPMISC_UTILS', true);
 
 function catfile($fn){
 	try{
-		$fh = fopen($fn);
+		$fh = fopen($fn, 'r');
 		$s = fread($fh, filesize($fn), );
 		fclose($fh);
 		return $s;
