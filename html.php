@@ -3,6 +3,8 @@
 include_once 'config.php';
 include_once 'xml.php';
 include_once 'utils.php';
+include_once 'octicons.php';
+if (!defined('PHPMISC_OCTICONS_DATA') define('PHPMISC_OCTICONS_DATA', []);
 
 if (defined('PHPMISC_HTML')) return;
 define('PHPMISC_HTML', true);
@@ -49,10 +51,8 @@ function mkHTMLpage($title, $main, $parsemd = false){
 
 function octicons($name, $cls='octicons'){
 	if (!PHPMISC_CONFIG['content']['octicons']) return '';
-	$octicons_data = [];
-	$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
-	if (array_key_exists($name, $octicons_data)){
-		$dat = $octicons_data[$name];
+	if (array_key_exists($name, PHPMISC_OCTICONS_DATA)){
+		$dat = PHPMISC_OCTICONS_DATA[$name];
 		return mkXMLtag('svg', $dat['path'],[
 			'xmlns' => 'http://www.w3.org/2000/svg',
 			'class' => $cls,

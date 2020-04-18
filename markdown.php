@@ -1,6 +1,7 @@
 <?php
 
 include 'config.php';
+include 'html.php';
 
 // Since this function is called by mkXML*, it is a bad idea to use them.
 function parseMD($string){
@@ -20,10 +21,8 @@ function parseMD($string){
 	}
 	/* Extra: octicons */
 	if ($mdconfig['octicons']){
-		$octicons_data = [];
-		$octicons_data = json_decode(catfile(__DIR__.'/octicons.json'), true);
 		$trdata = [];
-		foreach ($octicons_data as $k => $v){
+		foreach (PHPMISC_OCTICONS_DATA as $k => $v){
 			$trdata['::o::'.$k.'::'] = octicons($k);
 		}
 		$ret = strtr($ret, $trdata);
