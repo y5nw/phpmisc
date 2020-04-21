@@ -15,15 +15,13 @@ svg.octicons{
 }
 
 body{
-	background-color: gray;
 	margin: 0px;
+	border: none;
 }
 
 body > *{
 	margin: auto;
 	padding: 10px;
-	background-color: white;
-	border: solid 1px black;
 }
 
 body > main {
@@ -32,24 +30,18 @@ body > main {
 	width: calc(40% + 250px);
 	min-width: 60%
 	max-width: 100%;
-	border: solid 1px black;
 }
 
 body > header, footer {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	width: auto;
-	border: none;
 }
 
 body > header {
 	padding-bottom: 5px;
-	border-bottom: solid 10px gray;
-	border-image: linear-gradient(to bottom, white, gray) 100% 1;
 }
 
 body > footer {
 	padding-top: 5px;
-	border-top: solid 10px gray;
-	border-image: linear-gradient(to top, white, gray) 100% 1;
 }
