@@ -12,6 +12,7 @@ svg.octicons{
 	width: auto;
 	top: 0.125em;
 	position: relative;
+	fill: currentColor;
 }
 
 body{
