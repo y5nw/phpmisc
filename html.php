@@ -26,13 +26,15 @@ function mkhead($title){
 function mkheader(){
 	echo mkXMLtag('header',[
 		'Navigation: ',
-		['a', 'Home', ['href' => '/']],
+		['a', octicons('home').'Home', ['href' => '/']], // Octicons can be added here since it would only display if enabled
+		'<hr/>',
 	]);
 }
 
 // Generate footer
 function mkfooter(){
 	echo mkXMLtag('footer',[
+		'<hr/>',
 		(PHPMISC_CONFIG['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
 		'This page is generated using '.mkXMLtag('a', PHPMISC_CONFIG['source']['name'], ['href' => PHPMISC_CONFIG['source']['repo']]).'.',
 	]);
