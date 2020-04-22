@@ -42,12 +42,6 @@ function mkfooter(){
 
 // Generate the whole page
 function mkHTMLpage($title, $main, $parsemd = false){
-	return '<!DOCTYPE html><html>'.mkhead($title);
-	echo '<body>';
-	mkheader();
-	echo mkXMLtag('main',$main, array(), $parsemd);
-	mkfooter();
-	echo '</body></html>';
 	return '<!DOCTYPE>'.mkXMLtag('html',[
 		mkhead(),
 		['body',[['div',[
