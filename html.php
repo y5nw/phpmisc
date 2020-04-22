@@ -43,7 +43,7 @@ function mkfooter(){
 // Generate the whole page
 function mkHTMLpage($title, $main, $parsemd = false){
 	return '<!DOCTYPE>'.mkXMLtag('html',[
-		mkhead(),
+		mkhead($title),
 		['body',[['div',[
 			mkheader(),
 			['main', $main, []],
