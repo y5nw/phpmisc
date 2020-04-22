@@ -25,24 +25,10 @@ body > *{
 	padding: 10px;
 }
 
-body > main {
+#main_container {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	width: calc(40% + 250px);
 	min-width: 60%
 	max-width: 100%;
-}
-
-body > header, footer {
-	margin-top: 0px;
-	margin-bottom: 0px;
-	width: auto;
-}
-
-body > header {
-	padding-bottom: 5px;
-}
-
-body > footer {
-	padding-top: 5px;
 }

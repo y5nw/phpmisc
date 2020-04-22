@@ -24,7 +24,7 @@ function mkhead($title){
 
 // Generate header
 function mkheader(){
-	echo mkXMLtag('header',[
+	return mkXMLtag('header',[
 		'Navigation: ',
 		['a', octicons('home').'Home', ['href' => '/']], // Octicons can be added here since it would only display if enabled
 		'<hr/>',
@@ -33,7 +33,7 @@ function mkheader(){
 
 // Generate footer
 function mkfooter(){
-	echo mkXMLtag('footer',[
+	return mkXMLtag('footer',[
 		'<hr/>',
 		(PHPMISC_CONFIG['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
 		'This page is generated using '.mkXMLtag('a', PHPMISC_CONFIG['source']['name'], ['href' => PHPMISC_CONFIG['source']['repo']]).'.',
@@ -42,13 +42,20 @@ function mkfooter(){
 
 // Generate the whole page
 function mkHTMLpage($title, $main, $parsemd = false){
-	echo '<!DOCTYPE html><html>';
-	mkhead($title);
+	return '<!DOCTYPE html><html>'.mkhead($title);
 	echo '<body>';
 	mkheader();
 	echo mkXMLtag('main',$main, array(), $parsemd);
 	mkfooter();
 	echo '</body></html>';
+	return '<!DOCTYPE>'.mkXMLtag('html',[
+		mkhead(),
+		['body',[['div',[
+			mkheader(),
+			['main', $main, []],
+			mkfooter(),
+		], [id=>'main_container']]
+	],[], $parsemd);
 }
 
 function octicons($name, $cls='octicons'){
