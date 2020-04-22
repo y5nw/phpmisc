@@ -54,7 +54,7 @@ function mkHTMLpage($title, $main, $parsemd = false){
 			mkheader(),
 			['main', $main, []],
 			mkfooter(),
-		], [id=>'main_container']]
+		], [id=>'main_container']]]]
 	],[], $parsemd);
 }
 
