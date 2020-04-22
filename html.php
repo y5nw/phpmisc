@@ -16,7 +16,7 @@ function mailto($name,$email){
 
 // Make the <head>...</head> data
 function mkhead($title){
-	echo mkXMLtag('head', [
+	return mkXMLtag('head', [
 		['title',$title.' - '.PHPMISC_CONFIG['content']['title']],
 		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" '.__DIR__.'/style.css')],
 	]);
@@ -41,14 +41,14 @@ function mkfooter(){
 }
 
 // Generate the whole page
-function mkHTMLpage($title, $main, $parsemd = false){
-	return '<!DOCTYPE>'.mkXMLtag('html',[
+function mkHTMLpage($title = '', $main = [], $parsemd = false){
+	echo '<!DOCTYPE html>'.mkXMLtag('html',[
 		mkhead($title),
 		['body',[['div',[
 			mkheader(),
 			['main', $main, []],
 			mkfooter(),
-		], [id=>'main_container']]]]
+		], ['id'=>'main_container']]]]
 	],[], $parsemd);
 }
 
