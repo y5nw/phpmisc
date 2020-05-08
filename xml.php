@@ -25,15 +25,16 @@ function mkXMLdata($data, $parsemd = false){
 		if(empty($data[0])) return '';
 		if(empty($data[1])) $data[1]='';
 		if(empty($data[2])) $data[2]=[];
+		if(empty($data[3])) $data[3]=$parsemd;
 		if(gettype($data[1]) == 'array'){
 			$ret = mkXMLopen($data[0], $data[2]);
 			foreach($data[1] as $element){
-				$ret .= mkXMLdata($element, $parsemd);
+				$ret .= mkXMLdata($element, $data[3]);
 			}
 			$ret .= "</{$data[0]}>";
 			return $ret;
 		}else{
-			if ($parsemd) $data[1] = parseMD($data[1]);
+			if (($parsemd&&(!$data[3]))||(!empty($data[3]))) $data[1] = parseMD($data[1]);
 			return mkXMLopen($data[0], $data[2]) . "{$data[1]}</{$data[0]}>";
 		}
 	}else{
@@ -44,14 +45,14 @@ function mkXMLdata($data, $parsemd = false){
 
 // Simplify mkXMLdata to reduce headache
 function mkXMLtag($tagname, $innerXML = '', $attributes = [], $parsemd = false){
-	return mkXMLdata([$tagname, $innerXML, $attributes], $parsemd);
+	return mkXMLdata([$tagname, $innerXML, $attributes, $parsemd]);
 }
 
 // Create an XML array
 function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
 	if(count($tags)==0){
-		if(gettype($data)=='array') return mkXMLdata($data[0], $parsemd);
-		return mkXMLdata($data, $parsemd);
+		if(gettype($data)=='array') return $data[0];
+		return $data;
 	}else{
 		$tag = $tags[0];
 		unset($tags[0]);
@@ -62,7 +63,7 @@ function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
 			unset($attributes[0]);
 			$attributes=array_values($attributes);
 		}
-		$ret = "";
+		$ret = [];
 		foreach($data as $i){
 			$xattr=[];
 			if(count($tags)==0){
@@ -72,7 +73,7 @@ function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
 					}
 				}
 			}
-			$ret .= mkXMLopen($tag, array_merge($attr, $xattr)) . mkXMLarray($tags, $i, $attributes, $parsemd) . "</{$tag}>";
+			$ret[count($ret)] = [$tag, mkXMLarray($tags, $i, $attributes, $parsemd), array_merge($attr, $xattr), $parsemd];
 		}
 		return $ret;
 	}
