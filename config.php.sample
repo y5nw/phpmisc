@@ -14,6 +14,11 @@ define('PHPMISC_CONFIG',[
 		'title' => 'Foobar',
 		// Use Octicons
 		'octicons' => false,
+		// Navigation links
+		'navigation' => [
+			// The following line will link to 'index.php' and display 'Home'
+			'Home' => 'index.php',
+		],
 		// Options related to the markdown parser
 		'markdown' => [
 			// Set the following to false to disable the parser entirely.

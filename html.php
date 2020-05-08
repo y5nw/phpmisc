@@ -16,33 +16,35 @@ function mailto($name,$email){
 
 // Make the <head>...</head> data
 function mkhead($title){
-	return mkXMLtag('head', [
+	return ['head', [
 		['title',$title.' - '.PHPMISC_CONFIG['content']['title']],
 		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" '.__DIR__.'/style.css')],
-	]);
+	]];
 }
 
 // Generate header
 function mkheader(){
-	return mkXMLtag('header',[
-		'Navigation: ',
-		['a', octicons('home').'Home', ['href' => '/']], // Octicons can be added here since it would only display if enabled
-		'<hr/>',
-	]);
+	$ret = ['Navigation '];
+	foreach(PHPMISC_CONFIG['content']['navigation'] as $t => $l){
+		$ret[count($ret)] = ' | ';
+		$ret[count($ret)] = ['a', $t, ['href' => $l]];
+	}
+	$ret[count($ret)] = '<hr/>';
+	return ['header',$ret];
 }
 
 // Generate footer
 function mkfooter(){
-	return mkXMLtag('footer',[
+	return ['footer',[
 		'<hr/>',
 		(PHPMISC_CONFIG['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
 		'This page is generated using '.mkXMLtag('a', PHPMISC_CONFIG['source']['name'], ['href' => PHPMISC_CONFIG['source']['repo']]).'.',
-	]);
+	]];
 }
 
 // Generate the whole page
 function mkHTMLpage($title = '', $main = [], $parsemd = false){
-	echo '<!DOCTYPE html>'.mkXMLtag('html',[
+	return '<!DOCTYPE html>'.mkXMLtag('html',[
 		mkhead($title),
 		['body',[['div',[
 			mkheader(),
@@ -52,6 +54,13 @@ function mkHTMLpage($title = '', $main = [], $parsemd = false){
 	],[], $parsemd);
 }
 
+// Display different pages based on the 'p' variable from the URL
+function getPageByURL($pages, $parsemd){
+	$p = $pages[$_GET['p']??'main'];
+	return mkHTMLpage($p[0],$p[1],$parsemd);
+}
+
+// Octicons
 function octicons($name, $cls='octicons'){
 	if (!PHPMISC_CONFIG['content']['octicons']) return '';
 	global $PHPMISC_OCTICONS_DATA;
