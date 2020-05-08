@@ -11,5 +11,5 @@ To use phpmisc:
 * Include `main.php` in the page(s) you want to use phpmisc for.
 
 ## Licensing
-* This repository is licensed under GNU GPL version 2 only.
+* This repository is licensed under the 3 Clause BSD License.
 * Resources that are not directly included in this repository (i.e. resources that must be downloaded with a script or manually) might be licensed under other licenses. Please follow those licenses as well if you use them.

@@ -51,8 +51,7 @@ function mkXMLtag($tagname, $innerXML = '', $attributes = [], $parsemd = false){
 // Create an XML array
 function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
 	if(count($tags)==0){
-		if(gettype($data)=='array') return $data[0];
-		return $data;
+		return mkXMLdata($data, $parsemd);
 	}else{
 		$tag = $tags[0];
 		unset($tags[0]);
@@ -65,15 +64,7 @@ function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
 		}
 		$ret = [];
 		foreach($data as $i){
-			$xattr=[];
-			if(count($tags)==0){
-				if(gettype($i)=='array'){
-					if(!empty($i[1])){
-						$xattr=$i[1];
-					}
-				}
-			}
-			$ret[count($ret)] = [$tag, mkXMLarray($tags, $i, $attributes, $parsemd), array_merge($attr, $xattr), $parsemd];
+			$ret[count($ret)] = [$tag, mkXMLarray($tags, $i, $attributes, $parsemd), $attr, $parsemd];
 		}
 		return $ret;
 	}
