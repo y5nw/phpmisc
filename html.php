@@ -11,11 +11,11 @@ define('PHPMISC_HTML', true);
 
 // Make a mailto: link
 function mailto($name,$email){
-	return(mkXMLtag('a', $name . ' &lt;' . mkXMLtag('code',$email) . '&gt;', ['href' => "mailto:{$email}"]));
+	return ['a',[ $name.' &lt;', ['code',$email], '&gt;'], ['href' => "mailto:{$email}"]];
 }
 
 // Make the <head>...</head> data
-function mkhead($title){
+function mkHTMLhead($title){
 	return ['head', [
 		['title',$title.' - '.PHPMISC_CONFIG['content']['title']],
 		['style', shell_exec('sed -z "s/[\r\n\t]//g;s/\([:,]\) \\+/\\1/g" '.__DIR__.'/style.css')],
@@ -23,7 +23,7 @@ function mkhead($title){
 }
 
 // Generate header
-function mkheader(){
+function mkHTMLheader(){
 	$ret = ['Navigation '];
 	foreach(PHPMISC_CONFIG['content']['navigation'] as $t => $l){
 		$ret[count($ret)] = ' | ';
@@ -34,7 +34,7 @@ function mkheader(){
 }
 
 // Generate footer
-function mkfooter(){
+function mkHTMLfooter(){
 	return ['footer',[
 		'<hr/>',
 		(PHPMISC_CONFIG['content']['octicons']?'This site uses icons from <a href="https://octicons.github.com/">Octicons</a>.<br/>':''),
@@ -45,11 +45,11 @@ function mkfooter(){
 // Generate the whole page
 function mkHTMLpage($title = '', $main = [], $parsemd = false){
 	return '<!DOCTYPE html>'.mkXMLtag('html',[
-		mkhead($title),
+		mkHTMLhead($title),
 		['body',[['div',[
-			mkheader(),
+			mkHTMLheader(),
 			['main', $main, []],
-			mkfooter(),
+			mkHTMLfooter(),
 		], ['id'=>'main_container']]]]
 	],[], $parsemd);
 }
