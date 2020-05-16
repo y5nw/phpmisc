@@ -41,7 +41,7 @@ class XMLobject {
 							break;
 						case 'object':
 							try{
-								$ret .= $this->content->toXML();
+								$ret .= $this->content->__toString();
 							}catch (Exception $e){
 								throw $e;
 							}
@@ -52,7 +52,7 @@ class XMLobject {
 				break;
 			case 'object':
 				try{
-					$ret .= $this->content->toXML();
+					$ret .= $this->content->__toString();
 				}catch (Exception $e){
 					throw $e;
 				}
