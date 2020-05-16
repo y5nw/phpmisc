@@ -19,29 +19,30 @@ class XMLobject {
 		}else $ret .= ' '.$this->attrs;
 		return $ret . '>';
 	}
-	public function __construct($tag = '', $content = [], $attrs = [], $md = false){
+	public function __construct($tag = '', $content = [], $attrs = [], $md = NULL){
 		$this->tag = $tag;
 		$this->content = $content;
 		$this->attrs = $attrs;
 		$this->md = $md;
 	}
-	public function __toString(){
+	public function __toString($parentmd = false){ // the parsemd argument from the parent, not used by the usual toString
+		$md = isnull($this->md)?$parentmd:$this->md;
 		if(empty($this->tag)) return '';
 		$this->content ??= [];
 		$ret = $this->opentag();
 		switch(gettype($this->content)){
 			case 'string':
-				$ret .= $this->md?parseMD($this->content):$this->content;
+				$ret .= $md?parseMD($this->content):$this->content;
 				break;
 			case 'array':
 				foreach($this->content as $i){
 					switch(gettype($i)){
 						case 'string':
-							$ret .= $this->md?parseMD($i):$i;
+							$ret .= $md?parseMD($i):$i;
 							break;
 						case 'object':
 							try{
-								$ret .= $i->__toString();
+								$ret .= $i->__toString($md);
 							}catch (Exception $e){
 								throw $e;
 							}
@@ -52,7 +53,7 @@ class XMLobject {
 				break;
 			case 'object':
 				try{
-					$ret .= $this->content->__toString();
+					$ret .= $this->content->__toString($md);
 				}catch (Exception $e){
 					throw $e;
 				}
@@ -69,12 +70,12 @@ class XMLobject {
 		}
 		return $this;
 	}
-	public function addobj($tag = '', $content = [], $attrs = [], $md = false){
+	public function addobj($tag = '', $content = [], $attrs = [], $md = NULL){
 		return $this->addcontent(new XMLobject($tag, $content, $attrs, $md));
 	}
 }
 
-function mkXML($tag = '', $content = [], $attrs = [], $md = false){
+function mkXML($tag = '', $content = [], $attrs = [], $md = NULL){
 	return new XMLobject($tag, $content, $attrs, $md);
 }
 
