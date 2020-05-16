@@ -25,7 +25,7 @@ class XMLobject {
 		$this->attrs = $attrs;
 		$this->md = $md;
 	}
-	public function __toString($parentmd = false){ // the parsemd argument from the parent, not used by the usual toString
+	public function __invoke($parentmd = false){ // the parsemd argument from the parent
 		$md = isnull($this->md)?$parentmd:$this->md;
 		if(empty($this->tag)) return '';
 		$this->content ??= [];
@@ -42,7 +42,7 @@ class XMLobject {
 							break;
 						case 'object':
 							try{
-								$ret .= $i->__toString($md);
+								$ret .= $i($md);
 							}catch (Exception $e){
 								throw $e;
 							}
@@ -53,7 +53,7 @@ class XMLobject {
 				break;
 			case 'object':
 				try{
-					$ret .= $this->content->__toString($md);
+					$ret .= $this->content($md);
 				}catch (Exception $e){
 					throw $e;
 				}
@@ -61,6 +61,9 @@ class XMLobject {
 			default: throw new Exception('Unknown content in tag '.$this->tag);
 		}
 		return $ret."</{$this->tag}>";
+	}
+	public function __toString(){
+		return $this(false);
 	}
 	public function addcontent(...$content){
 		if (gettype($this->content)!='array') $this->content = [$this->content];
