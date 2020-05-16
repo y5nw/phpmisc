@@ -18,7 +18,7 @@ function mailto($name,$email){
 function mkHTMLhead($title){
 	return mkXML('head')
 		->addobj('title', $title.' - '.PHPMISC_CONFIG['content']['title'])
-		->addobj('style', preg_replace('/\s+/ms', ' ', catfile(__DIR__.'style.css')));
+		->addobj('style', preg_replace('/\s+/ms', ' ', catfile(__DIR__.'/style.css')));
 }
 
 // Generate header
