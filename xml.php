@@ -26,7 +26,7 @@ class XMLobject {
 		$this->md = $md;
 	}
 	public function __invoke($parentmd = false){ // the parsemd argument from the parent
-		$md = isnull($this->md)?$parentmd:$this->md;
+		$md = is_null($this->md)?$parentmd:$this->md;
 		if(empty($this->tag)) return '';
 		$this->content ??= [];
 		$ret = $this->opentag();
