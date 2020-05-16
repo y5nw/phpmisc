@@ -6,68 +6,78 @@ include_once 'markdown.php';
 if (defined('PHPMISC_XML')) return;
 define('PHPMISC_XML', true);
 
-// Make an opening XML tag
-function mkXMLopen($tag, $attrs = []){
-	$ret = "<{$tag}";
-	if(gettype($attrs) == 'array'){
-		foreach($attrs as $attr => $val){
-			$ret .= " {$attr}=\"{$val}\"";
-		}
-	}else{
-		$ret .= $attrs;
+// an XML object described in PHP
+class XMLobject {
+	public $tag;
+	public $content;
+	public $attrs = [];
+	public $md = false;
+	function opentag(){
+		$ret = "<{$this->tag}";
+		if(gettype($this->attrs) == 'array'){
+			foreach($this->attrs as $attr => $val) $ret .= " {$attr}=\"{$val}\"";
+		}else $ret .= ' '.$this->attrs;
+		return $ret . '>';
 	}
-	return $ret . '>';
+	public function __construct($tag = '', $content = [], $attrs = [], $md = false){
+		$this->tag = $tag;
+		$this->content = $content;
+		$this->attrs = $attrs;
+		$this->md = $md;
+	}
+	public function __toString(){
+		if(empty($this->tag)) return '';
+		$this->content ??= [];
+		$ret = $this->opentag();
+		switch(gettype($this->content)){
+			case 'string':
+				$ret .= $this->md?parseMD($this->content):$this->content;
+				break;
+			case 'array':
+				foreach($this->content as $i){
+					switch(gettype($i)){
+						case 'string':
+							$ret .= $this->md?parseMD($this->content):$this->content;
+							break;
+						case 'object':
+							try{
+								$ret .= $this->content->toXML();
+							}catch (Exception $e){
+								throw $e;
+							}
+						break;
+						default: throw new Exception('Unknown content in tag '.$this->tag);
+					}
+				}
+				break;
+			case 'object':
+				try{
+					$ret .= $this->content->toXML();
+				}catch (Exception $e){
+					throw $e;
+				}
+				break;
+			default: throw new Exception('Unknown content in tag '.$this->tag);
+		}
+		return $ret."</{$this->tag}>";
+	}
+	public function addcontent(...$content){
+		if (gettype($this->content)!='array') $this->content = [$this->content];
+		foreach ($content as $i){
+			if (gettype($i)=='array') foreach ($i as $j) $this->addcontent($j);
+			else if (!empty($i)) $this->content[count($this->content)] = $i;
+		}
+		return $this;
+	}
+	public function addobj($tag = '', $content = [], $attrs = [], $md = false){
+		return $this->addcontent(new XMLobject($tag, $content, $attrs, $md));
+	}
 }
 
-// Basic function to generate XML
-function mkXMLdata($data, $parsemd = false){
-	if(gettype($data) == 'array'){
-		if(empty($data[0])) return '';
-		if(empty($data[1])) $data[1]='';
-		if(empty($data[2])) $data[2]=[];
-		if(empty($data[3])) $data[3]=$parsemd;
-		if(gettype($data[1]) == 'array'){
-			$ret = mkXMLopen($data[0], $data[2]);
-			foreach($data[1] as $element){
-				$ret .= mkXMLdata($element, $data[3]);
-			}
-			$ret .= "</{$data[0]}>";
-			return $ret;
-		}else{
-			if (($parsemd&&(!$data[3]))||(!empty($data[3]))) $data[1] = parseMD($data[1]);
-			return mkXMLopen($data[0], $data[2]) . "{$data[1]}</{$data[0]}>";
-		}
-	}else{
-		if ($parsemd) return parseMD($data);
-		return $data;
-	}
+function mkXML($tag = '', $content = [], $attrs = [], $md = false){
+	return new XMLobject($tag, $content, $attrs, $md);
 }
 
-// Simplify mkXMLdata to reduce headache
-function mkXMLtag($tagname, $innerXML = '', $attributes = [], $parsemd = false){
-	return mkXMLdata([$tagname, $innerXML, $attributes, $parsemd]);
-}
-
-// Create an XML array
-function mkXMLarray($tags, $data, $attributes = [], $parsemd = false){
-	if(count($tags)==0){
-		return mkXMLdata($data, $parsemd);
-	}else{
-		$tag = $tags[0];
-		unset($tags[0]);
-		$tags = array_values($tags);
-		$attr=[];
-		if(!empty($attributes)){
-			$attr = $attributes[0];
-			unset($attributes[0]);
-			$attributes=array_values($attributes);
-		}
-		$ret = [];
-		foreach($data as $i){
-			$ret[count($ret)] = [$tag, mkXMLarray($tags, $i, $attributes, $parsemd), $attr, $parsemd];
-		}
-		return $ret;
-	}
-}
+// TODO: mkXMLarray() for XMLobjext objects
 
 ?>
