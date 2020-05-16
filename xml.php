@@ -37,7 +37,7 @@ class XMLobject {
 				foreach($this->content as $i){
 					switch(gettype($i)){
 						case 'string':
-							$ret .= $this->md?parseMD($this->content):$this->content;
+							$ret .= $this->md?parseMD($i):$i;
 							break;
 						case 'object':
 							try{
