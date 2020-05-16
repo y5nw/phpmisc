@@ -42,7 +42,7 @@ function mkHTMLpage($title = '', $main = [], $parsemd = false){
 		mkXML('body', [mkXML('div', [], [], $parsemd)
 			->addcontent(mkHTMLheader($parsemd))
 			->addobj('main', $main, [], $parsemd)
-			->addfooter(mkHTMLfooter($parsemd))
+			->addcontent(mkHTMLfooter($parsemd))
 		], [], $parsemd),
 	], [], $parsemd);
 }
