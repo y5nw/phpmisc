@@ -4,7 +4,7 @@ include_once 'config.php';
 include_once 'html.php';
 
 // Since this function is called by mkXML*, it is a bad idea to use them.
-function parseMD($string){
+function parseMD(string $string){
 	$mdconfig = PHPMISC_CONFIG['content']['markdown'];
 	if (!$mdconfig['enabled']) return $string;
 	$ret = $string;
